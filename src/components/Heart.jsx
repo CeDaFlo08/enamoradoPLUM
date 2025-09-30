@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./HeartAnimation.css";
+import song from "./song.mp3";
 
 export default function HeartAnimation() {
   const [showText, setShowText] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
+  const audioRef = useRef(new Audio(song));
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const textTimer = setTimeout(() => setShowText(true), 2500);
@@ -12,14 +15,26 @@ export default function HeartAnimation() {
     return () => {
       clearTimeout(textTimer);
       clearTimeout(arrowTimer);
+      audioRef.current.pause();
     };
   }, []);
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <div className="heart-container">
       <svg
         viewBox="0 0 200 180"
         className="heart-svg"
+        onClick={togglePlay} // Toggle play/pause
       >
         <defs>
           <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -40,13 +55,8 @@ export default function HeartAnimation() {
         />
       </svg>
 
-      {showArrow && (
-        <div className="arrow"></div>
-      )}
-
-      {showText && (
-        <h1 className="names">David + Danae</h1>
-      )}
+      {showArrow && <div className="arrow"></div>}
+      {showText && <h1 className="names">David + Danae</h1>}
     </div>
   );
 }
