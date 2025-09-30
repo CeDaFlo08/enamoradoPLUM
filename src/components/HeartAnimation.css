@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+.heart-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.heart-svg {
+  width: 300px;
+  height: 300px;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: drawHeart 3s forwards;
+  filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 10px #ff69b4);
+}
+
+@keyframes drawHeart {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.arrow {
+  position: absolute;
+  width: 220px;
+  height: 6px;
+  background: linear-gradient(to right, #00f0ff, #ff69b4);
+  top: 50%;
+  left: 50%;
+  margin-left: -110px;
+  transform: rotate(25deg);
+  border-radius: 3px;
+  animation: arrowAppear 1s forwards;
+}
+
+.arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -7px;
+  border-width: 10px 14px 10px 0;
+  border-style: solid;
+  border-color: #ff69b4 transparent transparent transparent;
+  transform: rotate(20deg);
+}
+
+@keyframes arrowAppear {
+  0% { width: 0; opacity: 0; }
+  100% { width: 220px; opacity: 1; }
+}
+
+.names {
+  position: absolute;
+  font-family: 'Great Vibes', cursive;
+  color: #ff69b4;
+  font-size: 40px;
+  text-align: center;
+  opacity: 0;
+  animation: textAppear 2s forwards;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #00f0ff, 0 0 30px #ff69b4;
+}
+
+@keyframes textAppear {
+  0% { opacity: 0; transform: translate(-50%, -60%); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
+}
